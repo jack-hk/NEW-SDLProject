@@ -9,9 +9,8 @@ public:
 	void update();
 	void quit();
 
-	SDL_Renderer* getRenderer() const { return renderer; }
-	SDL_Window* getWindow() const { return window; }
-
+	inline SDL_Renderer* getRenderer() const { return renderer; }
+	inline SDL_Window* getWindow() const { return window; }
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;

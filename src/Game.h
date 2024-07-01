@@ -1,14 +1,17 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include <SDL.h>
 #include "GraphicsManager.h"
 #include "InputManager.h"
+#include "Level.h"
 
-// Singleton Class
+// Singleton class.
+class Level;
 class Game
 {
 public:
-	static Game& getInstance()
+	static inline Game& getInstance()
 	{
 		static Game instance;
 		return instance;
@@ -19,8 +22,10 @@ public:
 	bool initialize();
 	void run();
 	void quit();
+
+	static std::vector<Level*> levels;
 private:
-	Game() : graphics() {}
+	Game() : graphics(), input() {}
 
 	const const char* WINDOW_TITLE = "Adventure Maze";
 	const int WINDOWSIZE_WIDTH = 600;
