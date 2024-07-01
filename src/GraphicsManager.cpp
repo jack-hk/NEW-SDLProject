@@ -9,6 +9,13 @@ bool GraphicsManager::initialize(const char* title, const int width, const int h
 	}
 	else std::cout << "Succesfully initialized SDL Video..." << std::endl;
 
+	if (IMG_Init(IMG_INIT_PNG) < 0)
+	{
+		std::cout << "Failed to initialize SDL Video! SDL_Error: " << SDL_GetError() << std::endl;
+		return false;
+	}
+	std::cout << "Succesfully initialized SDL_Image..." << std::endl;
+
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
 	if (!window)
 	{
@@ -31,11 +38,27 @@ bool GraphicsManager::initialize(const char* title, const int width, const int h
 	return true;
 }
 
-void GraphicsManager::update()
+SDL_Texture* GraphicsManager::loadTexture(const char* filename)
 {
-	SDL_RenderClear(renderer);
-	SDL_UpdateWindowSurface(window);
-	SDL_RenderPresent(renderer);
+	SDL_Surface* image = IMG_Load(filename);
+	if (image == nullptr)
+	{
+		std::cout << "Failed to IMG_Load! SDL Error: " << IMG_GetError() << std::endl;
+	}
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+	if (texture == nullptr)
+	{
+		std::cerr << "Failed to SDL_CreateTextureFromSurface! SDL Error: " << SDL_GetError() << std::endl;
+	}
+
+	std::cout << "Loaded image: " << filename << std::endl;
+	return texture;
+}
+
+void GraphicsManager::drawTexture(SDL_Rect dstRect, SDL_Texture* texture)
+{
+	SDL_RenderCopy(renderer, texture, NULL, &dstRect);
 }
 
 void GraphicsManager::quit()

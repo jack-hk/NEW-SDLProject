@@ -3,8 +3,9 @@
 #include <vector>
 #include <SDL.h>
 #include "GraphicsManager.h"
-#include "TextureManager.h"
 #include "InputManager.h"
+
+#include "objects/Visible.h"
 
 // Singleton class.
 class Level;
@@ -28,7 +29,7 @@ private:
 
 	const bool DEBUG_MODE = true;
 
-	const const char* WINDOW_TITLE = "Adventure Maze";
+	const char* WINDOW_TITLE = "Adventure Maze";
 	const int WINDOWSIZE_WIDTH = 600;
 	const int WINDOWSIZE_HEIGHT = 600;
 	const int WINDOWCOLOR_RED = 100;
@@ -39,6 +40,5 @@ private:
 	bool isRunning = false;
 
 	GraphicsManager graphics;
-	TextureManager textureManager;
 	InputManager input;
 };
