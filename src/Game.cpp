@@ -8,7 +8,17 @@ bool Game::initialize()
 		return false;
 	} else std::cout << "Succesfully initialized GraphicsManager..." << std::endl;
 
+	if (!textureManager.initialize(graphics.getRenderer(), DEBUG_MODE))
+	{
+		std::cout << "Failed to initialize TextureManager!" << std::endl;
+		return false;
+	}
+	else std::cout << "Succesfully initialized TextureManager..." << std::endl;
+
 	input.initialize();
+
+	std::cout << "Game has now been initialized!" << std::endl;
+	std::cout << "=================================" << std::endl;
 }
 
 void Game::run()
@@ -25,6 +35,7 @@ void Game::run()
 			switch (_sdlEvent.type)
 			{
 			case SDL_QUIT:
+				std::cout << "=================================" << std::endl;
 				std::cout << "Game quitted..." << std::endl;
 				isRunning = false;
 				break;
@@ -36,6 +47,7 @@ void Game::run()
 void Game::quit()
 {
 	input.quit();
+	textureManager.quit();
 	graphics.quit();
 	SDL_Quit();
 	std::cout << "Cleaned SDL subsystems!" << std::endl;

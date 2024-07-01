@@ -3,8 +3,8 @@
 #include <vector>
 #include <SDL.h>
 #include "GraphicsManager.h"
+#include "TextureManager.h"
 #include "InputManager.h"
-#include "Level.h"
 
 // Singleton class.
 class Level;
@@ -23,9 +23,10 @@ public:
 	void run();
 	void quit();
 
-	static std::vector<Level*> levels;
 private:
 	Game() : graphics(), input() {}
+
+	const bool DEBUG_MODE = true;
 
 	const const char* WINDOW_TITLE = "Adventure Maze";
 	const int WINDOWSIZE_WIDTH = 600;
@@ -38,5 +39,6 @@ private:
 	bool isRunning = false;
 
 	GraphicsManager graphics;
+	TextureManager textureManager;
 	InputManager input;
 };
