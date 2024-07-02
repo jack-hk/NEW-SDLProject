@@ -23,11 +23,16 @@ void Game::run()
 
 	SDL_Texture* tex = graphics.loadTexture("assets/placeholder1.png");
 	Visible go1(SDL_Rect(80, 100, 70, 70), tex);
+	Visible go2(SDL_Rect(300, 550, 70, 70), tex);
+	collision.addCollider(&go1);
+	collision.addCollider(&go2);
 	while (isRunning)
 	{
 		input.update();
+		collision.update();
 		graphics.clearRenderer();
 		go1.draw(graphics.getRenderer());
+		go2.draw(graphics.getRenderer());
 		graphics.presentRenderer();
 
 		while (SDL_PollEvent(&_sdlEvent))

@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "GraphicsManager.h"
 #include "InputManager.h"
+#include "CollisionManager.h"
 
 #include "objects/Visible.h"
 
@@ -41,4 +42,5 @@ private:
 
 	GraphicsManager graphics;
 	InputManager input;
+	CollisionManager collision;
 };

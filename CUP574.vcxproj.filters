@@ -16,6 +16,7 @@
     </ClCompile>
     <ClCompile Include="src\objects\Visible.cpp" />
     <ClCompile Include="src\objects\Colliable.cpp" />
+    <ClCompile Include="src\CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -41,5 +42,6 @@
     <ClInclude Include="include\objects\Collidable.h" />
     <ClInclude Include="include\objects\Visible.h" />
     <ClInclude Include="include\VectorMath.h" />
+    <ClInclude Include="include\CollisionManager.h" />
   </ItemGroup>
 </Project>

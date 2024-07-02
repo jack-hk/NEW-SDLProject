@@ -1,0 +1,35 @@
+#include "CollisionManager.h"
+
+bool CollisionManager::AABB(SDL_Rect a, SDL_Rect b)
+{
+    if (a.x < b.x + b.w &&
+        a.x + a.w > b.x &&
+        a.y < b.y + b.h &&
+        a.y + a.h > b.y)
+    {
+        return true;
+    }
+    return false;
+}
+
+void CollisionManager::update()
+{
+	for (size_t y = 0; y < CollisionManager::colliders.size(); y++)
+	{
+		for (size_t x = y; x < CollisionManager::colliders.size(); x++)
+		{
+			if (x == y) continue;
+			if (CollisionManager::AABB(CollisionManager::colliders[x]->getBody(), CollisionManager::colliders[y]->getBody()))
+			{
+				CollisionManager::colliders[x]->SetIsColliding(true);
+				CollisionManager::colliders[y]->SetIsColliding(true);
+				std::cout << "[ColSys]: Box Collision Detected!" << std::endl;
+			}
+			else
+			{
+				CollisionManager::colliders[x]->SetIsColliding(false);
+				CollisionManager::colliders[y]->SetIsColliding(false);
+			}
+		}
+	}
+}

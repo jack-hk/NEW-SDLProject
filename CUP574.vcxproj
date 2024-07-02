@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\objects\Colliable.cpp" />
     <ClCompile Include="src\objects\GameObject.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\objects\Visible.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CollisionManager.h" />
     <ClInclude Include="include\objects\Collidable.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\objects\GameObject.h" />

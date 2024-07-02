@@ -8,7 +8,7 @@ void InputManager::initialize()
 }
 
 void InputManager::update()
-{
+{ 
 	SDL_memcpy((void*)_previousKeyboardState, _keyboardState, SDL_NUM_SCANCODES);
 }
 
