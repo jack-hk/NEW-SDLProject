@@ -18,6 +18,8 @@
     <ClCompile Include="src\objects\Colliable.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\objects\Character.cpp" />
+    <ClCompile Include="src\objects\Player.cpp" />
+    <ClCompile Include="src\objects\Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -45,5 +47,7 @@
     <ClInclude Include="include\VectorMath.h" />
     <ClInclude Include="include\CollisionManager.h" />
     <ClInclude Include="include\objects\Character.h" />
+    <ClInclude Include="include\objects\Player.h" />
+    <ClInclude Include="include\objects\Projectile.h" />
   </ItemGroup>
 </Project>

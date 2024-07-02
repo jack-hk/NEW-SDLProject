@@ -6,7 +6,8 @@
 #include "InputManager.h"
 #include "CollisionManager.h"
 
-#include "objects/Character.h"
+#include "objects/Player.h"
+#include "objects/Projectile.h"
 
 // Singleton class.
 class Level;
@@ -25,10 +26,10 @@ public:
 	void run();
 	void quit();
 
+	void buildLevel(SDL_Texture* wall1, SDL_Texture* wall2, SDL_Texture* floor);
+
 private:
 	Game() : graphics(), input() {}
-
-	const bool DEBUG_MODE = true;
 
 	const int FPS = 60;
 	const int DELAY_TIME = 1000.0f / FPS;
@@ -42,6 +43,8 @@ private:
 	const int WINDOWCOLOR_ALPHA = SDL_ALPHA_OPAQUE;
 
 	bool isRunning = false;
+
+	std::vector<Visible*> visibleGameObjects;
 
 	GraphicsManager graphics;
 	InputManager input;
