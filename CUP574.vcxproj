@@ -26,6 +26,7 @@
     <ClCompile Include="src\GraphicsManager.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\objects\NonMovable.cpp" />
     <ClCompile Include="src\objects\Visible.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="include\objects\GameObject.h" />
     <ClInclude Include="include\GraphicsManager.h" />
     <ClInclude Include="include\InputManager.h" />
+    <ClInclude Include="include\objects\NonMovable.h" />
     <ClInclude Include="include\objects\Visible.h" />
     <ClInclude Include="include\VectorMath.h" />
   </ItemGroup>

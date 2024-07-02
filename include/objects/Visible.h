@@ -9,7 +9,7 @@ public:
 	~Visible();
 
 	void draw(SDL_Renderer* renderer);
-private:
+protected:
 	GraphicsManager* graphics;
 	SDL_Texture* texture;
 };
