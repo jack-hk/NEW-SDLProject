@@ -24,37 +24,43 @@ void Game::run()
 	SDL_Texture* catTex = graphics.loadTexture("assets/cat.png");
 	SDL_Texture* mouseTex = graphics.loadTexture("assets/mouse.png");
 	SDL_Texture* brickTex = graphics.loadTexture("assets/brick.png");
-	NonMovable go1(SDL_Rect(80, 100, 90, 90), catTex);
-	NonMovable go2(SDL_Rect(300, 450, 40, 40), mouseTex);
-	NonMovable go3(SDL_Rect(0, 0, 100, 100), brickTex);
-	collision.addCollider(&go1);
-	collision.addCollider(&go2);
-	collision.addCollider(&go3);
+
+	Visible player(SDL_Rect(300, 450, 40, 40), true, mouseTex);
+	collision.addCollider(&player);
+
+	Visible enemy1(SDL_Rect(80, 100, 90, 90), true, catTex);
+	collision.addCollider(&enemy1);
+
+	Visible wall1(SDL_Rect(0, 0, 100, 100), false, brickTex);
+	collision.addCollider(&wall1);
+
 	while (isRunning)
 	{
 		input.update();
 		// Input movement, for the demostration.
 		if (input.getKey(SDL_SCANCODE_W))
 		{
-			go1.transform(go1.getPosition() + (Vector2D(0, -1)));
+			player.transform(player.getPosition() + (Vector2D(0, -1)));
 		}
 		if (input.getKey(SDL_SCANCODE_A))
 		{
-			go1.transform(go1.getPosition() + (Vector2D(-1, 0)));
+			player.transform(player.getPosition() + (Vector2D(-1, 0)));
 		}
 		if (input.getKey(SDL_SCANCODE_S))
 		{
-			go1.transform(go1.getPosition() + (Vector2D(0, 1)));
+			player.transform(player.getPosition() + (Vector2D(0, 1)));
 		}
 		if (input.getKey(SDL_SCANCODE_D))
 		{
-			go1.transform(go1.getPosition() + (Vector2D(1, 0)));
+			player.transform(player.getPosition() + (Vector2D(1, 0)));
 		}
 		collision.update();
 		graphics.clearRenderer();
-		go1.draw(graphics.getRenderer());
-		go2.draw(graphics.getRenderer());
-		go3.draw(graphics.getRenderer());
+
+		player.draw(graphics.getRenderer());
+		enemy1.draw(graphics.getRenderer());
+		wall1.draw(graphics.getRenderer());
+
 		graphics.presentRenderer();
 
 		while (SDL_PollEvent(&_sdlEvent))

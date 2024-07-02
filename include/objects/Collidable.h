@@ -4,9 +4,11 @@
 class Collidable : public GameObject
 {
 public:
-	Collidable(SDL_Rect rect);
+	Collidable(SDL_Rect rect, bool isMovable);
 
-	void SetIsColliding(bool isCollide) { isColliding = isCollide; }
-protected:
-	bool isColliding = false;
+	inline void setIsColliding(bool isCollide) { isColliding = isCollide; }
+	inline bool getIsMovable() { return this->isMovable; }
+private:
+	bool isColliding;
+	bool isMovable;
 };

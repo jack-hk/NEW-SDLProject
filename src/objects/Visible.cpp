@@ -1,6 +1,8 @@
 #include "objects/Visible.h"
 
-Visible::Visible(SDL_Rect rect, SDL_Texture* texture) : texture(texture), Collidable(rect), graphics(nullptr) {}
+Visible::Visible(SDL_Rect rect, bool isMovable, SDL_Texture* texture) : texture(texture), Collidable(rect, isMovable), graphics(nullptr) 
+{
+}
 
 Visible::~Visible()
 {

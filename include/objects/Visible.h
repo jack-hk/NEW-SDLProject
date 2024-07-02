@@ -5,11 +5,11 @@
 class Visible : public Collidable
 {
 public:
-	Visible(SDL_Rect rect, SDL_Texture* texture);
+	Visible(SDL_Rect rect, bool isMovable, SDL_Texture* texture);
 	~Visible();
 
 	void draw(SDL_Renderer* renderer);
-protected:
+private:
 	GraphicsManager* graphics;
 	SDL_Texture* texture;
 };

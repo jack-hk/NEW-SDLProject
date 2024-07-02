@@ -6,7 +6,7 @@
 #include "InputManager.h"
 #include "CollisionManager.h"
 
-#include "objects/NonMovable.h"
+#include "objects/Visible.h"
 
 // Singleton class.
 class Level;
