@@ -25,7 +25,7 @@ void Game::run()
 	SDL_Texture* mouseTex = graphics.loadTexture("assets/mouse.png");
 	SDL_Texture* brickTex = graphics.loadTexture("assets/brick.png");
 
-	Visible player(SDL_Rect(300, 450, 40, 40), true, mouseTex);
+	Character player(SDL_Rect(300, 450, 40, 40), true, mouseTex, 5);
 	collision.addCollider(&player);
 
 	Visible enemy1(SDL_Rect(80, 100, 90, 90), true, catTex);
@@ -33,6 +33,8 @@ void Game::run()
 
 	Visible wall1(SDL_Rect(0, 0, 100, 100), false, brickTex);
 	collision.addCollider(&wall1);
+
+	std::cout << "HP: " << player.getHitPoints() << std::endl;
 
 	while (isRunning)
 	{
