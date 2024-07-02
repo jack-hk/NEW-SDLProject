@@ -20,6 +20,7 @@ void Game::run()
 	std::cout << "Game is running..." << std::endl;
 	isRunning = true;
 	SDL_Event _sdlEvent;
+	Uint32 frameStart, frameTime;
 
 	SDL_Texture* catTex = graphics.loadTexture("assets/cat.png");
 	SDL_Texture* mouseTex = graphics.loadTexture("assets/mouse.png");
@@ -38,6 +39,7 @@ void Game::run()
 
 	while (isRunning)
 	{
+		frameStart = SDL_GetTicks();
 		input.update();
 		// Input movement, for the demostration.
 		if (input.getKey(SDL_SCANCODE_W))
@@ -75,6 +77,12 @@ void Game::run()
 				isRunning = false;
 				break;
 			}
+		}
+
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+		{
+			SDL_Delay((int)(DELAY_TIME - frameTime));
 		}
 	}
 }

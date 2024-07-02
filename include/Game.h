@@ -30,6 +30,9 @@ private:
 
 	const bool DEBUG_MODE = true;
 
+	const int FPS = 60;
+	const int DELAY_TIME = 1000.0f / FPS;
+
 	const char* WINDOW_TITLE = "Adventure Maze";
 	const int WINDOWSIZE_WIDTH = 600;
 	const int WINDOWSIZE_HEIGHT = 600;
