@@ -9,6 +9,6 @@ public:
 	inline int getHitPoints() { return hitPoints; }
 	inline void damageHitPoints(int damage) { hitPoints -= damage; }
 
-private:
+protected:
 	int hitPoints;
 };

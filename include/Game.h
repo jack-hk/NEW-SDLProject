@@ -9,6 +9,7 @@
 #include "objects/Player.h"
 #include "objects/Enemy.h"
 #include "objects/Projectile.h"
+#include "objects/Flag.h"
 
 // Singleton class.
 class Level;

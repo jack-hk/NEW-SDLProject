@@ -2,6 +2,7 @@
 
 Player::Player(SDL_Rect rect, bool isMovable, const char* tag, SDL_Texture* texture, int hitPoints) : Character(rect, isMovable, tag, texture, hitPoints)
 {
+	this->projectiles = {};
 	std::cout << "[INFO] Your HP: " << hitPoints << std::endl;
 }
 
@@ -9,11 +10,7 @@ Player::~Player()
 {
 	for (auto& obj : projectiles)
 	{
-		Projectile* projectile = dynamic_cast<Projectile*>(obj);
-		if (projectile)
-		{
-			delete obj;
-		}
+		delete obj;
 	}
 	projectiles.clear();
 	std::cout << "[Player]: Deleted and cleared projectiles... (size is: " << projectiles.size() << ")" << std::endl;
@@ -39,6 +36,31 @@ void Player::movementInput(InputManager input)
 	}
 }
 
+void Player::updateProjectiles()
+{
+	for (auto& obj : projectiles)
+	{
+		obj->update();
+	}
+}
+
+void Player::checkToDestroyProjectiles(CollisionManager collision)
+{
+	for (Projectile* obj : projectiles)
+	{
+		if (obj->getDestroyMe())
+		{
+			auto it = std::find(projectiles.begin(), projectiles.end(), obj);
+			if (it != projectiles.end())
+			{
+				collision.removeCollider(obj);
+				// delete obj;
+				projectiles.erase(it);
+			}
+		}
+	}
+}
+
 void Player::fireProjectile(InputManager input, CollisionManager collision, SDL_Texture* projectTexture)
 {
 	Vector2D direction = { 0, 0 };
@@ -46,22 +68,22 @@ void Player::fireProjectile(InputManager input, CollisionManager collision, SDL_
 
 	if (input.getKeyDown(SDL_SCANCODE_UP))
 	{
-		direction.y = -1;
+		direction.y = -7;
 		direction.x = 0;
 	}
 	else if (input.getKeyDown(SDL_SCANCODE_DOWN))
 	{
-		direction.y = 1;
+		direction.y = 7;
 		direction.x = 0;
 	}
 	else if (input.getKeyDown(SDL_SCANCODE_LEFT))
 	{
-		direction.x = -1;
+		direction.x = -7;
 		direction.y = 0;
 	}
 	else if (input.getKeyDown(SDL_SCANCODE_RIGHT))
 	{
-		direction.x = 1;
+		direction.x = 7;
 		direction.y = 0;
 	}
 	else

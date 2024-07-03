@@ -21,6 +21,8 @@
     <ClCompile Include="src\objects\Player.cpp" />
     <ClCompile Include="src\objects\Projectile.cpp" />
     <ClCompile Include="src\objects\Enemy.cpp" />
+    <ClCompile Include="src\objects\Collectible.cpp" />
+    <ClCompile Include="src\objects\Flag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -51,5 +53,7 @@
     <ClInclude Include="include\objects\Player.h" />
     <ClInclude Include="include\objects\Projectile.h" />
     <ClInclude Include="include\objects\Enemy.h" />
+    <ClInclude Include="include\objects\Collectible.h" />
+    <ClInclude Include="include\objects\Flag.h" />
   </ItemGroup>
 </Project>

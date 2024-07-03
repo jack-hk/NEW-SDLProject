@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "InputManager.h"
 #include "CollisionManager.h"
+#include "Game.h"
 
 class Player : public Character
 {
@@ -12,6 +13,8 @@ public:
 
 	void movementInput(InputManager input);
 	void fireProjectile(InputManager input, CollisionManager collision, SDL_Texture* projectTexture);
+	void updateProjectiles();
+	void checkToDestroyProjectiles(CollisionManager collision);
 
 	inline std::vector<Projectile*> getProjectiles() { return projectiles; }
 private:

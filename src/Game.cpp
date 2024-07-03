@@ -18,61 +18,64 @@ bool Game::initialize()
 void Game::buildLevel(SDL_Texture* wall1, SDL_Texture* wall2, SDL_Texture* floor)
 {
 	int startX = 0;
-	int startY = 0;
-	int width = 100;
-	int height = 100;
-	int spacing = 100;
-	int rows = 6;
-	int cols = 6;
+int startY = 0;
+int width = 100;
+int height = 100;
+int spacing = 100;
+int rows = 6;
+int cols = 6;
 
-	for (int i = 0; i < rows; ++i)
+for (int i = 0; i < rows; ++i) //floor, has no collider
+{
+	for (int j = 0; j < cols; ++j)
 	{
-		for (int j = 0; j < cols; ++j)
-		{
-			int x = startX + j * (width);
-			int y = startY + i * (height);
+		int x = startX + j * (width);
+		int y = startY + i * (height);
 
-			Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", floor);
-
-			visibleGameObjects.push_back(wall);
-		}
-	}
-
-	for (int i = 0; i < 6; ++i)
-	{
-		int x = startX + i * (width);
-		int y = startY;
-
-		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall1);
-
-		collision.addCollider(wall);
+		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", floor);
 
 		visibleGameObjects.push_back(wall);
 	}
+}
 
-	for (int i = 0; i < 3; ++i)
-	{
-		int x = startX + i * (width + spacing);
-		int y = 200;
+for (int i = 0; i < 6; ++i)
+{
+	int x = startX + i * (width);
+	int y = startY;
 
-		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall2);
+	Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall1);
 
-		collision.addCollider(wall);
+	collision.addCollider(wall);
 
-		visibleGameObjects.push_back(wall);
-	}
+	visibleGameObjects.push_back(wall);
+}
 
-	for (int i = 0; i < 3; ++i)
-	{
-		int x = 100 + i * (width + spacing);
-		int y = 400;
+for (int i = 0; i < 3; ++i)
+{
+	int x = startX + i * (width + spacing);
+	int y = 200;
 
-		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false,"", wall2);
+	Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall2);
 
-		collision.addCollider(wall);
+	collision.addCollider(wall);
 
-		visibleGameObjects.push_back(wall);
-	}
+	visibleGameObjects.push_back(wall);
+}
+
+for (int i = 0; i < 3; ++i)
+{
+	int x = 100 + i * (width + spacing);
+	int y = 400;
+
+	Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall2);
+
+	collision.addCollider(wall);
+
+	visibleGameObjects.push_back(wall);
+}
+Visible* wall3 = new Visible(SDL_Rect(501, 200, width, height), false, "", wall2);
+collision.addCollider(wall3);
+visibleGameObjects.push_back(wall3);
 }
 
 void Game::run()
@@ -87,54 +90,62 @@ void Game::run()
 	SDL_Texture* brickTex = graphics.loadTexture("assets/brick.png");
 	SDL_Texture* crateTex = graphics.loadTexture("assets/crate.png");
 	SDL_Texture* floorTex = graphics.loadTexture("assets/floor.png");
+	SDL_Texture* flagTex = graphics.loadTexture("assets/flag.png");
+	SDL_Texture* winTex = graphics.loadTexture("assets/win.png");
 
 	buildLevel(brickTex, crateTex, floorTex);
 
-	Player player(SDL_Rect(300, 450, 40, 40), true,"PlayerWeapon", mouseTex, 5);
+	Player player(SDL_Rect(50, 550, 40, 40), true, "Player", mouseTex, 100);
 	collision.addCollider(&player);
 
-	Enemy enemy1(SDL_Rect(200, 200, 90, 90), true,"", catTex, 5);
+	Enemy enemy1(SDL_Rect(300, 100, 90, 90), true, "Enemy", catTex, 100);
 	collision.addCollider(&enemy1);
+
+	Flag flag(SDL_Rect(550, 120, 40, 40), false, "", flagTex);
+	collision.addCollider(&flag);
+
+	Visible winSign(SDL_Rect(200, 200, 200, 200), false, "", winTex);
 
 	while (isRunning)
 	{
 		frameStart = SDL_GetTicks();
+
+		collision.update();
+
 		player.fireProjectile(input, collision, crateTex);
+		player.checkToDestroyProjectiles(collision);
+		player.updateProjectiles();
+
 		input.update();
-
-		for (auto& obj : player.getProjectiles())
-		{
-			Projectile* projectile = dynamic_cast<Projectile*>(obj);
-			if (projectile)
-			{
-				projectile->update();
-			}
-		}
-
 		player.movementInput(input);
 		enemy1.update();
-		collision.update();
+		if (enemy1.getHitPoints() < 1 && collision.findCollider(&enemy1)) collision.removeCollider(&enemy1);
+		if (!flag.getCollected()) flag.update();
+
 		graphics.clearRenderer();
+
+		if (!flag.getCollected()){
 
 		for (auto& obj : visibleGameObjects)
 		{
-			Visible* visibleObj = dynamic_cast<Visible*>(obj);
-			if (visibleObj)
+			if (obj)
 			{
-				visibleObj->draw(graphics.getRenderer());
-			}
-		}
-		for (auto& obj : player.getProjectiles())
-		{
-			Projectile* projectile = dynamic_cast<Projectile*>(obj);
-			if (projectile)
-			{
-				projectile->draw(graphics.getRenderer());
+				obj->draw(graphics.getRenderer());
 			}
 		}
 
+		for (auto& obj : player.getProjectiles())
+		{
+			obj->draw(graphics.getRenderer());
+		}
+
 		player.draw(graphics.getRenderer());
-		enemy1.draw(graphics.getRenderer());
+		if (enemy1.getHitPoints() > 0)enemy1.draw(graphics.getRenderer());
+		}
+
+		if (!flag.getCollected()) flag.draw(graphics.getRenderer());
+
+		if (flag.getCollected()) winSign.draw(graphics.getRenderer());
 
 		graphics.presentRenderer();
 

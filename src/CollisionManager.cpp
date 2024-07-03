@@ -90,10 +90,10 @@ void CollisionManager::update()
 			if (x == y) continue;
 			if (CollisionManager::AABB(CollisionManager::colliders[x]->getRect(), CollisionManager::colliders[y]->getRect()))
 			{
-				CollisionManager::colliders[x]->setIsColliding(true);
-				CollisionManager::colliders[y]->setIsColliding(true);
 				CollisionManager::colliders[x]->setTochingCollider(colliders[y]);
 				CollisionManager::colliders[y]->setTochingCollider(colliders[x]);
+				CollisionManager::colliders[x]->setIsColliding(true);
+				CollisionManager::colliders[y]->setIsColliding(true);
 				resolveCollision(colliders[x], colliders[y]);
 			}
 			else

@@ -11,6 +11,5 @@ public:
 	void draw(SDL_Renderer* renderer);
 
 private:
-	GraphicsManager* graphics;
 	SDL_Texture* texture;
 };

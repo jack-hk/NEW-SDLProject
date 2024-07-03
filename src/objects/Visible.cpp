@@ -1,7 +1,11 @@
 #include "objects/Visible.h"
 
-Visible::Visible(SDL_Rect rect, bool isMovable, const char* tag, SDL_Texture* texture) : texture(texture), Collidable(rect, isMovable, tag), graphics(nullptr)
+Visible::Visible(SDL_Rect rect, bool isMovable, const char* tag, SDL_Texture* texture) : texture(texture), Collidable(rect, isMovable, tag)
 {
+    if (texture == nullptr)
+    {
+        std::cerr << "Failed to intialize texture: " << this << std::endl;
+    }
 }
 
 Visible::~Visible()
