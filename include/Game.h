@@ -7,6 +7,7 @@
 #include "CollisionManager.h"
 
 #include "objects/Player.h"
+#include "objects/Enemy.h"
 #include "objects/Projectile.h"
 
 // Singleton class.

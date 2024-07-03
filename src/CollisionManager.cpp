@@ -92,12 +92,16 @@ void CollisionManager::update()
 			{
 				CollisionManager::colliders[x]->setIsColliding(true);
 				CollisionManager::colliders[y]->setIsColliding(true);
+				CollisionManager::colliders[x]->setTochingCollider(colliders[y]);
+				CollisionManager::colliders[y]->setTochingCollider(colliders[x]);
 				resolveCollision(colliders[x], colliders[y]);
 			}
 			else
 			{
 				CollisionManager::colliders[x]->setIsColliding(false);
 				CollisionManager::colliders[y]->setIsColliding(false);
+				CollisionManager::colliders[x]->setTochingCollider(nullptr);
+				CollisionManager::colliders[y]->setTochingCollider(nullptr);
 			}
 		}
 	}

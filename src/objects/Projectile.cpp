@@ -1,6 +1,6 @@
 #include "objects/Projectile.h"
 
-Projectile::Projectile(SDL_Rect rect, SDL_Texture* texture, Vector2D direction) : Visible(rect, true, texture), direction(direction)
+Projectile::Projectile(SDL_Rect rect, SDL_Texture* texture, const char* tag, Vector2D direction) : Visible(rect, true, tag, texture ), direction(direction)
 {
 }
 

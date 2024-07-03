@@ -32,7 +32,7 @@ void Game::buildLevel(SDL_Texture* wall1, SDL_Texture* wall2, SDL_Texture* floor
 			int x = startX + j * (width);
 			int y = startY + i * (height);
 
-			Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, floor);
+			Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", floor);
 
 			visibleGameObjects.push_back(wall);
 		}
@@ -43,7 +43,7 @@ void Game::buildLevel(SDL_Texture* wall1, SDL_Texture* wall2, SDL_Texture* floor
 		int x = startX + i * (width);
 		int y = startY;
 
-		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, wall1);
+		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall1);
 
 		collision.addCollider(wall);
 
@@ -55,7 +55,7 @@ void Game::buildLevel(SDL_Texture* wall1, SDL_Texture* wall2, SDL_Texture* floor
 		int x = startX + i * (width + spacing);
 		int y = 200;
 
-		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, wall2);
+		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, "", wall2);
 
 		collision.addCollider(wall);
 
@@ -67,7 +67,7 @@ void Game::buildLevel(SDL_Texture* wall1, SDL_Texture* wall2, SDL_Texture* floor
 		int x = 100 + i * (width + spacing);
 		int y = 400;
 
-		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false, wall2);
+		Visible* wall = new Visible(SDL_Rect{ x, y, width, height }, false,"", wall2);
 
 		collision.addCollider(wall);
 
@@ -90,27 +90,17 @@ void Game::run()
 
 	buildLevel(brickTex, crateTex, floorTex);
 
-	Player player(SDL_Rect(300, 450, 40, 40), true, mouseTex, 5);
+	Player player(SDL_Rect(300, 450, 40, 40), true,"PlayerWeapon", mouseTex, 5);
 	collision.addCollider(&player);
 
-	for (auto& obj : player.getProjectiles())
-	{
-		Projectile* projectile = dynamic_cast<Projectile*>(obj);
-		if (projectile)
-		{
-			collision.addCollider(projectile);
-		}
-	}
-
-	Visible enemy1(SDL_Rect(200, 200, 90, 90), true, catTex);
+	Enemy enemy1(SDL_Rect(200, 200, 90, 90), true,"", catTex, 5);
 	collision.addCollider(&enemy1);
 
 	while (isRunning)
 	{
 		frameStart = SDL_GetTicks();
-		player.fireProjectile(input, crateTex);
+		player.fireProjectile(input, collision, crateTex);
 		input.update();
-
 
 		for (auto& obj : player.getProjectiles())
 		{
@@ -122,6 +112,7 @@ void Game::run()
 		}
 
 		player.movementInput(input);
+		enemy1.update();
 		collision.update();
 		graphics.clearRenderer();
 

@@ -23,6 +23,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\objects\Character.cpp" />
     <ClCompile Include="src\objects\Colliable.cpp" />
+    <ClCompile Include="src\objects\Enemy.cpp" />
     <ClCompile Include="src\objects\GameObject.cpp" />
     <ClCompile Include="src\GraphicsManager.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="include\objects\Character.h" />
     <ClInclude Include="include\objects\Collidable.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\objects\Enemy.h" />
     <ClInclude Include="include\objects\GameObject.h" />
     <ClInclude Include="include\GraphicsManager.h" />
     <ClInclude Include="include\InputManager.h" />

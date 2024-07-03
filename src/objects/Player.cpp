@@ -1,6 +1,6 @@
 #include "objects/Player.h"
 
-Player::Player(SDL_Rect rect, bool isMovable, SDL_Texture* texture, int hitPoints) : Character(rect, isMovable, texture, hitPoints) 
+Player::Player(SDL_Rect rect, bool isMovable, const char* tag, SDL_Texture* texture, int hitPoints) : Character(rect, isMovable, tag, texture, hitPoints)
 {
 	std::cout << "[INFO] Your HP: " << hitPoints << std::endl;
 }
@@ -39,7 +39,7 @@ void Player::movementInput(InputManager input)
 	}
 }
 
-void Player::fireProjectile(InputManager input, SDL_Texture* projectTexture)
+void Player::fireProjectile(InputManager input, CollisionManager collision, SDL_Texture* projectTexture)
 {
 	Vector2D direction = { 0, 0 };
 	SDL_Rect spawnRect = { rect.x, rect.y, 16, 16 };
@@ -52,7 +52,7 @@ void Player::fireProjectile(InputManager input, SDL_Texture* projectTexture)
 	else if (input.getKeyDown(SDL_SCANCODE_DOWN))
 	{
 		direction.y = 1;
-		direction.x = 0; 
+		direction.x = 0;
 	}
 	else if (input.getKeyDown(SDL_SCANCODE_LEFT))
 	{
@@ -62,7 +62,7 @@ void Player::fireProjectile(InputManager input, SDL_Texture* projectTexture)
 	else if (input.getKeyDown(SDL_SCANCODE_RIGHT))
 	{
 		direction.x = 1;
-		direction.y = 0; 
+		direction.y = 0;
 	}
 	else
 	{
@@ -70,6 +70,7 @@ void Player::fireProjectile(InputManager input, SDL_Texture* projectTexture)
 		return;
 	}
 
-	Projectile* newProjectile = new Projectile(spawnRect, projectTexture, direction);
+	Projectile* newProjectile = new Projectile(spawnRect, projectTexture, "PlayerWeapon", direction);
+	collision.addCollider(newProjectile);
 	projectiles.push_back(newProjectile);
 }
