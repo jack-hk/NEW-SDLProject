@@ -8,7 +8,9 @@ public:
 
 	inline void setIsColliding(bool isCollide) { isColliding = isCollide; }
 	inline bool getIsMovable() { return this->isMovable; }
+
+protected:
+	bool isColliding = false;
 private:
-	bool isColliding;
 	bool isMovable;
 };

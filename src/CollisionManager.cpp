@@ -102,3 +102,9 @@ void CollisionManager::update()
 		}
 	}
 }
+
+void CollisionManager::clean()
+{
+	colliders.clear();
+	std::cout << "Deleted and cleared colliders... (size is: " << colliders.size() << ")" << std::endl;
+}

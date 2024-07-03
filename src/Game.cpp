@@ -4,9 +4,9 @@ bool Game::initialize()
 {
 	if (!graphics.initialize(WINDOW_TITLE, WINDOWSIZE_WIDTH, WINDOWSIZE_HEIGHT, WINDOWCOLOR_RED, WINDOWCOLOR_GREEN, WINDOWCOLOR_BLUE, WINDOWCOLOR_ALPHA))
 	{
-		std::cout << "Failed to initialize graphics!" << std::endl;
+		std::cout << "Failed to initialize GraphicsManager!" << std::endl;
 		return false;
-	} else std::cout << "Succesfully initialized GraphicsManager..." << std::endl;
+	}
 
 	input.initialize();
 
@@ -93,19 +93,35 @@ void Game::run()
 	Player player(SDL_Rect(300, 450, 40, 40), true, mouseTex, 5);
 	collision.addCollider(&player);
 
+	for (auto& obj : player.getProjectiles())
+	{
+		Projectile* projectile = dynamic_cast<Projectile*>(obj);
+		if (projectile)
+		{
+			collision.addCollider(projectile);
+		}
+	}
+
 	Visible enemy1(SDL_Rect(200, 200, 90, 90), true, catTex);
 	collision.addCollider(&enemy1);
 
-	Projectile projectile(SDL_Rect(280, 500, 20, 20), catTex, Vector2D(0,-1));
-
-	std::cout << "HP: " << player.getHitPoints() << std::endl;
 	while (isRunning)
 	{
 		frameStart = SDL_GetTicks();
-
+		player.fireProjectile(input, crateTex);
 		input.update();
+
+
+		for (auto& obj : player.getProjectiles())
+		{
+			Projectile* projectile = dynamic_cast<Projectile*>(obj);
+			if (projectile)
+			{
+				projectile->update();
+			}
+		}
+
 		player.movementInput(input);
-		projectile.update();
 		collision.update();
 		graphics.clearRenderer();
 
@@ -117,10 +133,17 @@ void Game::run()
 				visibleObj->draw(graphics.getRenderer());
 			}
 		}
+		for (auto& obj : player.getProjectiles())
+		{
+			Projectile* projectile = dynamic_cast<Projectile*>(obj);
+			if (projectile)
+			{
+				projectile->draw(graphics.getRenderer());
+			}
+		}
 
 		player.draw(graphics.getRenderer());
 		enemy1.draw(graphics.getRenderer());
-		projectile.draw(graphics.getRenderer());
 
 		graphics.presentRenderer();
 
@@ -148,6 +171,7 @@ void Game::quit()
 {
 	input.quit();
 	graphics.quit();
+	collision.clean();
 	SDL_Quit();
 	std::cout << "Cleaned SDL subsystems!" << std::endl;
 }

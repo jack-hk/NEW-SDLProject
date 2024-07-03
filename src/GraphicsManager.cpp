@@ -52,7 +52,6 @@ SDL_Texture* GraphicsManager::loadTexture(const char* filename)
 		std::cerr << "Failed to SDL_CreateTextureFromSurface! SDL Error: " << SDL_GetError() << std::endl;
 	}
 
-	std::cout << "Loaded image: " << filename << std::endl;
 	return texture;
 }
 
